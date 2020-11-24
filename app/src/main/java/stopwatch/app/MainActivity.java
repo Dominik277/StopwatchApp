@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.Timer;
 
+import androidx.annotation.NonNull;
+
 public class MainActivity extends Activity {
 
     private int sekunde = 0;
@@ -34,9 +36,24 @@ public class MainActivity extends Activity {
             jeliUkljuceno = savedInstanceState.getBoolean("ukljuceno");
             jeliBiloUkljuceno = savedInstanceState.getBoolean("biloUkljuceno");
         }
-
+        runningTimer();
     }
-    
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void startBrojanje(View view){
         jeliUkljuceno = true;
     }
@@ -48,6 +65,12 @@ public class MainActivity extends Activity {
     public void resetirajBrojanje(View view){
         jeliUkljuceno = false;
         sekunde = 0;
+    }
+
+    private void runningTimer(){
+
+
+
     }
 
 }
