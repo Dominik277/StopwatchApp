@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Timer;
-
 import androidx.annotation.NonNull;
 
 public class MainActivity extends Activity {
 
     private int sekunde = 0;
-    private boolean jeliUkljuceno;
-    private boolean jeliBiloUkljuceno;
+    private boolean isRunning;
+    private boolean wasRunning;
 
     Button gumbStart,gumbStop,gumbResetiraj;
     TextView mjestoBrojanja;
@@ -33,8 +31,8 @@ public class MainActivity extends Activity {
 
         if (savedInstanceState != null){
             sekunde = savedInstanceState.getInt("sekunde");
-            jeliUkljuceno = savedInstanceState.getBoolean("ukljuceno");
-            jeliBiloUkljuceno = savedInstanceState.getBoolean("biloUkljuceno");
+            isRunning = savedInstanceState.getBoolean("ukljuceno");
+            wasRunning = savedInstanceState.getBoolean("biloUkljuceno");
         }
         runningTimer();
     }
@@ -47,23 +45,29 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        wasRunning = isRunning;
+        isRunning = false;
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (wasRunning){
+            isRunning = true;
+        }
     }
 
     public void startBrojanje(View view){
-        jeliUkljuceno = true;
+        isRunning = true;
     }
 
     public void stopBrojanje(View view){
-        jeliUkljuceno = false;
+        isRunning = false;
     }
 
     public void resetirajBrojanje(View view){
-        jeliUkljuceno = false;
+        isRunning = false;
         sekunde = 0;
     }
 
