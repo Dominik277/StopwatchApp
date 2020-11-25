@@ -1,11 +1,13 @@
 package stopwatch.app;
 
-
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
@@ -73,7 +75,24 @@ public class MainActivity extends Activity {
 
     private void runningTimer(){
 
+        final TextView mjestoBrojanja = findViewById(R.id.mjestoBrojanja);
+        final Handler handler = new Handler();
 
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int sati = sekunde/3600;
+                int minute = (sekunde % 3600) / 60;
+                int secs = sekunde % 60;
+
+                String vrijemeTime = String.format(Locale.getDefault(),"%d:%02d:%02d  ",sati,minute,secs);
+                mjestoBrojanja.setText(vrijemeTime);
+                if (isRunning){
+                    sekunde++;
+                }
+                handler.postDelayed(this,1000);
+            }
+        });
 
     }
 
